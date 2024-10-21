@@ -1,37 +1,50 @@
-# main.py
+# Function to display current student records
+def view_records(file_name):
+    try:
+        with open(file_name, 'r') as file:
+            print(file.read())
+    except FileNotFoundError:
+        print("No records found. Please add student details first.")
 
-def read_file(file_path):
-    with open(file_path, 'r') as file:
-        return file.read()
+# Function to add student information
+def add_record(file_name):
+    name = input("Enter student's name: ")
+    intro = input(f"Enter a brief introduction for {name}: ")
+    subject = input(f"What is {name}'s favorite subject? ")
+    
+    with open(file_name, 'a') as file:
+        file.write(f"Name: {name}\nIntroduction: {intro}\nFavorite Subject: {subject}\n\n")
+    print(f"{name}'s information has been added.")
 
-def write_file(file_path, text):
-    with open(file_path, 'w') as file:
-        file.write(text)
+# Function to erase all records
+def clear_records(file_name):
+    open(file_name, 'w').close()
+    print("All records have been cleared.")
 
-def append_file(file_path, text):
-    with open(file_path, 'a') as file:
-        file.write(text)
-
-def count_lines(file_path):
-    with open(file_path, 'r') as file:
-        return len(file.readlines())
-
+# Main function to handle the program flow
 def main():
-    file_path = input("Enter file path: ")
-
+    file_name = 'students.txt'
+    
     while True:
-        choice = input("\nChoose: 1-Read, 2-Write, 3-Append, 4-Count lines, 5-Exit: ")
-
+        print("\nOptions:")
+        print("1. View all student records")
+        print("2. Add a new student record")
+        print("3. Clear all records")
+        print("4. Exit")
+        
+        choice = input("Choose an option (1-4): ")
+        
         if choice == '1':
-            print(read_file(file_path))
+            view_records(file_name)
         elif choice == '2':
-            write_file(file_path, input("Enter text: "))
+            add_record(file_name)
         elif choice == '3':
-            append_file(file_path, input("Enter text: "))
+            clear_records(file_name)
         elif choice == '4':
-            print(f"Total lines: {count_lines(file_path)}")
-        elif choice == '5':
+            print("Exiting the program.")
             break
+        else:
+            print("Invalid option. Please try again.")
 
 if __name__ == "__main__":
     main()
